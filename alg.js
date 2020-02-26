@@ -1,30 +1,12 @@
 // LISTA DE ADJACENCIA
-const adjacencyList = {
-	1: {
-		direct: [1, 2, 3],
-		indirect: [1, 6],
-	},
-	2: {
-		direct: [2, 4, 5],
-		indirect: [1, 2, 6],
-	},
-	3: {
-		direct: [3, 4],
-		indirect: [1, 3, 4],
-	},
-	4: {
-		direct: [3, 4],
-		indirect: [2, 3, 4],
-	},
-	5: {
-		direct: [5, 6],
-		indirect: [2, 5],
-	},
-	6: {
-		direct: [1, 2, 6],
-		indirect: [5, 6],
-	},
-};
+const adjacencyList = [
+	{ id: 1, direct: [1, 2, 3], indirect: [1, 6] },
+	{ id: 2, direct: [2, 4, 5], indirect: [1, 2, 6] },
+	{ id: 3, direct: [3, 4], indirect: [1, 3, 4] },
+	{ id: 4, direct: [3, 4], indirect: [2, 3, 4] },
+	{ id: 5, direct: [5, 6], indirect: [2, 5] },
+	{ id: 6, direct: [1, 2, 6], indirect: [5, 6] },
+];
 
 let available = new Set([1, 2, 3, 4, 5, 6]); // todos os nos estao disponiveis
 
@@ -41,38 +23,39 @@ let isEqual = function(setA, setB) {
 
 let transitiveDirect = function(nodeNumber) {
 	let previous = new Set();
-	let r = new Set();
-	let node = adjacencyList[nodeNumber];
-	node.direct.forEach((elt) => r.add(elt));
+	let current = new Set();
+	let node = adjacencyList.find((elt) => elt.id === nodeNumber);
+	node.direct.forEach((elt) => current.add(elt));
 
 	// paramos quando a proxima iteracao retorna o mesmo resultado
-	while (!isEqual(previous, r)) {
-		previous = r;
-		for (let node of r) {
-			node = adjacencyList[node];
-			node.direct.forEach((elt) => r.add(elt));
+	while (!isEqual(previous, current)) {
+		previous = current;
+		for (let nodeNumber of current) {
+			node = adjacencyList.find((elt) => elt.id === nodeNumber);
+
+			node.direct.forEach((elt) => current.add(elt));
 		}
 	}
 
-	return r;
+	return current;
 };
 
 let transitiveIndirect = function(nodeNumber) {
 	let previous = new Set();
-	let r = new Set();
-	let node = adjacencyList[nodeNumber];
-	node.indirect.forEach((elt) => r.add(elt));
+	let current = new Set();
+	let node = adjacencyList.find((elt) => elt.id === nodeNumber);
+	node.indirect.forEach((elt) => current.add(elt));
 
 	// paramos quando a proxima iteracao retorna o mesmo resultado
-	while (!isEqual(previous, r)) {
-		previous = r;
-		for (let node of r) {
-			node = adjacencyList[node];
-			node.indirect.forEach((elt) => r.add(elt));
+	while (!isEqual(previous, current)) {
+		previous = current;
+		for (let nodeNumber of current) {
+			node = adjacencyList.find((elt) => elt.id === nodeNumber);
+			node.indirect.forEach((elt) => current.add(elt));
 		}
 	}
 
-	return r;
+	return current;
 };
 
 let intersection = function(setA, setB) {
@@ -126,4 +109,6 @@ let solve = function(available) {
 
 solve(available);
 
+console.log('**************');
+console.log('ANSWER: ');
 console.log(components);
