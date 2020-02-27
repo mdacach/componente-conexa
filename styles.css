@@ -38,8 +38,10 @@ body {
 
 #container-components {
 	display: grid;
-	border: solid #e3e0dc 3px;
+	border: solid #e3e0dc 5px;
 	margin-top: 10px;
+	margin: 10px;
+	padding: 1px;
 	background-color: #f4e1db;
 }
 
@@ -49,6 +51,7 @@ body {
 	justify-content: space-evenly;
 	align-content: space-between;
 	margin: 5px;
+	padding: 2px;
 	background-color: #f4e1db;
 	color: #895e5f;
 	font-size: large;
@@ -90,4 +93,8 @@ button {
 	color: #8a5e5e;
 	border-radius: 12%;
 	text-align: center;
+}
+
+#ok-checkbox {
+	width: 30px;
 }

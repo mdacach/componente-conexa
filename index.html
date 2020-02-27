@@ -13,33 +13,25 @@
 	</head>
 	<body>
 		<div id="app">
-			<h1>add Nodes here</h1>
+			<h1>add nodes here</h1>
 			<div id="container-inputs">
 				<div class="node" v-for="node in adjacencyList">
 					<span class="attributes">Node </span>
-					<input
-						type="text"
-						v-model="node.id"
-						@keyup.enter="sanitize"
-					/>
+					<input type="text" v-model="node.id" />
 					<span class="attributes">Direct</span>
-					<input
-						type="text"
-						v-model="node.direct"
-						@keyup.enter="sanitize"
-					/>
+					<input type="text" v-model="node.direct" />
 					<span class="attributes">Indirect</span>
-					<input
-						type="text"
-						v-model="node.indirect"
-						@keyup.enter="sanitize"
-					/>
+					<input type="text" v-model="node.indirect" />
+					<button @click="removeNode(node); checked = false;">
+						remove
+					</button>
 				</div>
 			</div>
-			<button @click="addNode" id="add-node-btn">
+			<button @click="addNode(); checked = false;" id="add-node-btn">
 				add node
 			</button>
-			<button @click="sanitize">OK</button>
+			<button @click="sanitize(); checked = true;">OK</button>
+			<input type="checkbox" id="ok-checkbox" v-model="checked" />
 			<div id="divisor"></div>
 		</div>
 
@@ -47,8 +39,9 @@
 			<button @click="runAlgorithm" v-if="!isFinished">
 				run algorithm
 			</button>
-			<button v-else @click="clear">run again</button>
+			<button v-else @click="clear">start again</button>
 			<div
+				v-if="isFinished"
 				id="container-components"
 				:style="{'grid-template-columns': `1fr.repeat(${numComponents})`}"
 			>

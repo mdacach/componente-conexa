@@ -9,10 +9,17 @@ let app = new Vue({
 			{ id: 5, direct: [5, 6], indirect: [2, 5] },
 			{ id: 6, direct: [1, 2, 6], indirect: [5, 6] },
 		],
+		checked: false,
 	}, // data is the adjacency list
 	methods: {
 		addNode() {
 			this.adjacencyList.push({});
+		},
+		removeNode(node) {
+			console.log(node);
+			this.adjacencyList = this.adjacencyList.filter(
+				(el) => el.id != node.id
+			);
 		},
 		showList() {
 			console.table(this.adjacencyList);
@@ -41,6 +48,25 @@ let app = new Vue({
 					}
 				}
 			}
+
+			let nodeIds = [];
+			for (node of this.adjacencyList) nodeIds.push(node.id);
+
+			for (node of this.adjacencyList) {
+				for (id of node.direct) {
+					if (!nodeIds.includes(id)) {
+						let index = node.direct.indexOf(id);
+						node.direct.splice(index, 1);
+					}
+				}
+				for (id of node.indirect) {
+					if (!nodeIds.includes(id)) {
+						let index = node.indirect.indexOf(id);
+						node.indirect.splice(index, 1);
+					}
+				}
+			}
+			console.log({ nodeIds });
 		},
 	},
 });
@@ -56,7 +82,6 @@ getAvailable = function() {
 	for (node of ADJACENCY_LIST) {
 		AVAILABLE.add(node.id);
 	}
-	console.log({ AVAILABLE });
 	return AVAILABLE;
 };
 
@@ -78,8 +103,7 @@ let alg = new Vue({
 			let adjacencyList = getAdjacencyList();
 			let available = getAvailable();
 			let components = [];
-			solve(adjacencyList, available, components);
-			console.log(components);
+			solve(adjacencyList, available, components, (debug = false));
 			this.components = components;
 			this.isFinished = true;
 			this.numComponents = components.length;

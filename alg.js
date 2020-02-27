@@ -14,8 +14,8 @@ let transitiveDirect = function(adjacencyList, nodeNumber) {
 	let current = new Set();
 	let node = adjacencyList.find((elt) => elt.id === nodeNumber);
 	node.direct.forEach((elt) => current.add(elt));
-
 	// paramos quando a proxima iteracao retorna o mesmo resultado
+	console.log({ adjacencyList });
 	while (!isEqual(previous, current)) {
 		previous = current;
 		for (let nodeNumber of current) {
@@ -32,7 +32,6 @@ let transitiveIndirect = function(adjacencyList, nodeNumber) {
 	let current = new Set();
 	let node = adjacencyList.find((elt) => elt.id === nodeNumber);
 	node.indirect.forEach((elt) => current.add(elt));
-
 	// paramos quando a proxima iteracao retorna o mesmo resultado
 	while (!isEqual(previous, current)) {
 		previous = current;
