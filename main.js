@@ -63,8 +63,9 @@ getAvailable = function() {
 let alg = new Vue({
 	el: '#alg',
 	data: {
-		components: '',
+		components: [],
 		isFinished: false,
+		numComponents: 1,
 	},
 	methods: {
 		showAdjacencyList() {
@@ -81,6 +82,7 @@ let alg = new Vue({
 			console.log(components);
 			this.components = components;
 			this.isFinished = true;
+			this.numComponents = components.length;
 			return components;
 		},
 		clear() {

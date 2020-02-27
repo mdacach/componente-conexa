@@ -6,10 +6,15 @@
 		<title>Componente Conexa</title>
 		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 		<link rel="stylesheet" href="styles.css" />
+		<link
+			href="https://fonts.googleapis.com/css?family=B612&display=swap"
+			rel="stylesheet"
+		/>
 	</head>
 	<body>
 		<div id="app">
-			<div class="container">
+			<h1>add Nodes here</h1>
+			<div id="container-inputs">
 				<div class="node" v-for="node in adjacencyList">
 					<span class="attributes">Node </span>
 					<input
@@ -31,25 +36,27 @@
 					/>
 				</div>
 			</div>
-			<button @click="addNode">
+			<button @click="addNode" id="add-node-btn">
 				add node
 			</button>
-			<button @click="showList">show adjList</button>
-			<button @click="sanitize">sanitize</button>
+			<button @click="sanitize">OK</button>
 			<div id="divisor"></div>
 		</div>
 
 		<div id="alg">
-			<button>update data</button>
-			<button @click="showAdjacencyList">show adjacency list</button>
-			<button @click="showAvailable">show available</button>
 			<button @click="runAlgorithm" v-if="!isFinished">
 				run algorithm
 			</button>
 			<button v-else @click="clear">run again</button>
-			<div id="container-nodes">
-				<div v-for="component in components">
-					<div v-for="node in component ">{{ node }}</div>
+			<div
+				id="container-components"
+				:style="{'grid-template-columns': `1fr.repeat(${numComponents})`}"
+			>
+				<div v-for="(component, i) in components" class="component">
+					[Component {{ i + 1}}]
+					<div v-for="node in component" class="component-node">
+						{{ node }}
+					</div>
 					<hr />
 				</div>
 			</div>

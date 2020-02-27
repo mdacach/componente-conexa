@@ -1,27 +1,93 @@
 * {
-	font-family: sans-serif;
+	font-family: 'B612', fantasy;
+	/* font-family: sans-serif; */
 	font-size: medium;
 	font-weight: bold;
 }
 
-.container {
+h1 {
+	margin: 0 auto;
+	margin-top: 50px;
+	margin-bottom: 5px;
+	text-align: center;
+	color: #f4e1db;
+}
+
+#app {
+	text-align: center;
+	width: 800px;
+}
+
+#alg {
+	width: 800px;
+	text-align: center;
+}
+
+body {
+	width: 50%;
+	margin: 0 auto;
+	background-color: #5c3b3c;
+}
+
+#container-inputs {
 	display: grid;
 	width: 100%;
+	border: solid #e3e0dc 3px;
+	justify-content: center;
+}
+
+#container-components {
+	display: grid;
+	border: solid #e3e0dc 3px;
+	margin-top: 10px;
+	background-color: #f4e1db;
+}
+
+.component {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-evenly;
+	align-content: space-between;
+	margin: 5px;
+	background-color: #f4e1db;
+	color: #895e5f;
+	font-size: large;
+}
+
+.component-node {
+	background-color: #f4e1db;
+	margin-left: 3px;
+	color: #5c3b3c;
 }
 
 #divisor {
-	margin-bottom: 100px;
+	margin-bottom: 25px;
 }
 
 .node {
-	background-color: rgb(168, 190, 211);
+	background-color: #f4e1db;
+	margin: 1px;
+	padding: 10px;
+}
+
+#add-node-btn {
+	margin-top: 10px;
+	width: 100px;
 }
 
 input {
-	background-color: rgb(112, 124, 131);
-	color: white;
+	background-color: #895e5e;
+	color: #e3e0dc;
+	width: 20%;
 }
 
 .attributes {
-	color: white;
+	color: #895e5e;
+}
+
+button {
+	background-color: #f4e1db;
+	color: #8a5e5e;
+	border-radius: 12%;
+	text-align: center;
 }
