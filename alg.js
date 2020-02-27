@@ -20,9 +20,6 @@ let transitiveDirect = function(adjacencyList, nodeNumber) {
 		previous = current;
 		for (let nodeNumber of current) {
 			node = adjacencyList.find((elt) => elt.id === nodeNumber);
-
-			console.log(node.direct);
-
 			node.direct.forEach((elt) => current.add(elt));
 		}
 	}
@@ -41,7 +38,6 @@ let transitiveIndirect = function(adjacencyList, nodeNumber) {
 		previous = current;
 		for (let nodeNumber of current) {
 			node = adjacencyList.find((elt) => elt.id === nodeNumber);
-
 			node.indirect.forEach((elt) => current.add(elt));
 		}
 	}
@@ -74,24 +70,25 @@ let removeSeen = function(available, seen) {
 	return available;
 };
 
-let solve = function(adjacencyList, available, components) {
+let solve = function(adjacencyList, available, components, debug = false) {
 	if (available.size == 0) return;
 
 	let nodes = Array.from(available);
 	let node = nodes[0]; // comecando por um no qualquer
-	console.log({ node });
+	if (debug) console.log({ node });
 
 	let direct = transitiveDirect(adjacencyList, node);
-	console.log({ direct });
+	if (debug) console.log({ direct });
 	let indirect = transitiveIndirect(adjacencyList, node);
-	console.log({ indirect });
+	if (debug) console.log({ indirect });
 	let component = intersection(direct, indirect);
+	if (debug) console.log({ component });
 
-	components.push(component);
-	console.log({ component });
-	console.log({ components });
+	components.push(Array.from(component).sort());
+
+	if (debug) console.log({ components });
 	available = removeSeen(available, component);
-	console.log({ available });
+	if (debug) console.log({ available });
 
 	solve(adjacencyList, available, components);
 };
