@@ -1,15 +1,3 @@
-// LISTA DE ADJACENCIA
-const adjacencyList = [
-	{ id: 1, direct: [1, 2, 3], indirect: [1, 6] },
-	{ id: 2, direct: [2, 4, 5], indirect: [1, 2, 6] },
-	{ id: 3, direct: [3, 4], indirect: [1, 3, 4] },
-	{ id: 4, direct: [3, 4], indirect: [2, 3, 4] },
-	{ id: 5, direct: [5, 6], indirect: [2, 5] },
-	{ id: 6, direct: [1, 2, 6], indirect: [5, 6] },
-];
-
-let available = new Set([1, 2, 3, 4, 5, 6]); // todos os nos estao disponiveis
-
 let isEqual = function(setA, setB) {
 	if (setA.size !== setB.size) {
 		return false;
@@ -21,7 +9,7 @@ let isEqual = function(setA, setB) {
 	return true;
 };
 
-let transitiveDirect = function(nodeNumber) {
+let transitiveDirect = function(adjacencyList, nodeNumber) {
 	let previous = new Set();
 	let current = new Set();
 	let node = adjacencyList.find((elt) => elt.id === nodeNumber);
@@ -33,6 +21,8 @@ let transitiveDirect = function(nodeNumber) {
 		for (let nodeNumber of current) {
 			node = adjacencyList.find((elt) => elt.id === nodeNumber);
 
+			console.log(node.direct);
+
 			node.direct.forEach((elt) => current.add(elt));
 		}
 	}
@@ -40,7 +30,7 @@ let transitiveDirect = function(nodeNumber) {
 	return current;
 };
 
-let transitiveIndirect = function(nodeNumber) {
+let transitiveIndirect = function(adjacencyList, nodeNumber) {
 	let previous = new Set();
 	let current = new Set();
 	let node = adjacencyList.find((elt) => elt.id === nodeNumber);
@@ -51,6 +41,7 @@ let transitiveIndirect = function(nodeNumber) {
 		previous = current;
 		for (let nodeNumber of current) {
 			node = adjacencyList.find((elt) => elt.id === nodeNumber);
+
 			node.indirect.forEach((elt) => current.add(elt));
 		}
 	}
@@ -83,18 +74,16 @@ let removeSeen = function(available, seen) {
 	return available;
 };
 
-let components = [];
-
-let solve = function(available) {
+let solve = function(adjacencyList, available, components) {
 	if (available.size == 0) return;
 
 	let nodes = Array.from(available);
 	let node = nodes[0]; // comecando por um no qualquer
 	console.log({ node });
 
-	let direct = transitiveDirect(node);
+	let direct = transitiveDirect(adjacencyList, node);
 	console.log({ direct });
-	let indirect = transitiveIndirect(node);
+	let indirect = transitiveIndirect(adjacencyList, node);
 	console.log({ indirect });
 	let component = intersection(direct, indirect);
 
@@ -104,11 +93,5 @@ let solve = function(available) {
 	available = removeSeen(available, component);
 	console.log({ available });
 
-	solve(available);
+	solve(adjacencyList, available, components);
 };
-
-solve(available);
-
-console.log('**************');
-console.log('ANSWER: ');
-console.log(components);

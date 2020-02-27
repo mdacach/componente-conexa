@@ -5,13 +5,54 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Componente Conexa</title>
 		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+		<link rel="stylesheet" href="styles.css" />
 	</head>
 	<body>
 		<div id="app">
-			<button @click="addNode(1)">
+			<div class="container">
+				<div class="node" v-for="node in adjacencyList">
+					<span class="attributes">Node </span>
+					<input
+						type="text"
+						v-model="node.id"
+						@keyup.enter="sanitize"
+					/>
+					<span class="attributes">Direct</span>
+					<input
+						type="text"
+						v-model="node.direct"
+						@keyup.enter="sanitize"
+					/>
+					<span class="attributes">Indirect</span>
+					<input
+						type="text"
+						v-model="node.indirect"
+						@keyup.enter="sanitize"
+					/>
+				</div>
+			</div>
+			<button @click="addNode">
 				add node
 			</button>
 			<button @click="showList">show adjList</button>
+			<button @click="sanitize">sanitize</button>
+			<div id="divisor"></div>
+		</div>
+
+		<div id="alg">
+			<button>update data</button>
+			<button @click="showAdjacencyList">show adjacency list</button>
+			<button @click="showAvailable">show available</button>
+			<button @click="runAlgorithm" v-if="!isFinished">
+				run algorithm
+			</button>
+			<button v-else @click="clear">run again</button>
+			<div id="container-nodes">
+				<div v-for="component in components">
+					<div v-for="node in component ">{{ node }}</div>
+					<hr />
+				</div>
+			</div>
 		</div>
 		<script src="alg.js"></script>
 		<script src="main.js"></script>
